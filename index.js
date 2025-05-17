@@ -6,9 +6,13 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
+
+
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
-const subscribers = new Set(); // for demo purposes, replace with DB in production
+const subscribers = new Set(); 
+
+// teest
 
 app.post(`/bot`, async (req, res) => {
   const message = req.body.message;
