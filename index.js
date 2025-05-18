@@ -8,6 +8,7 @@ app.use(express.json());
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_API = `https://api.telegram.org/bot${TOKEN}`;
 const subscribers = new Set(); 
+const BRANCHES = process.env.BRANCHES_TO_NOTIFY?.split(',') || ['main'];
 
 app.post(`/bot`, async (req, res) => {
   const message = req.body.message;
@@ -34,6 +35,8 @@ app.post('/github-webhook', async (req, res) => {
 
   console.log("GitHub Webhook Received:", JSON.stringify(body, null, 2));
 
+  const refBranch = body.ref?.replace('refs/heads/', '');
+  
   if (body.ref === 'refs/heads/main') {
     const pusher = body.pusher.name;
     const repo = body.repository.full_name;
